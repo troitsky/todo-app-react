@@ -93,8 +93,10 @@
   align-items: center;
 }
 
-.task_item  input {
-  margin-right: 7px;
+
+input[type=checkbox] {
+  transform: scale(1.5);
+  margin-right: 15px;
 }
 
 .btn_delete {
