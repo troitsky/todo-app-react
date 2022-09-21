@@ -5,6 +5,9 @@ function App() {
   const [inputValue, setInputValue] = useState('')
   const [activeTasks, setActiveTasks] = useState([])
   const [completedTasks, setCompletedTasks] = useState([])
+  const [showAll, setShowAll] = useState(true)
+  const [showActive, setShowActive] = useState(false)
+  const [showCompleted, setShowCompleted] = useState(false)
 
   function handleInputChange(e) {
     setInputValue(e.target.value)
@@ -34,14 +37,19 @@ function App() {
     }
   }
 
+  function deleteAll() {
+    setCompletedTasks([]);
+    setActiveTasks([])
+  }
+
   return (
     <div className="App">
       <div className="container">
         <h1 className="app_title">#todo</h1>
         <nav className="nav_tabs">
-          <div className="nav_tab">All</div>
-          <div className="nav_tab">Active</div>
-          <div className="nav_tab">Completed</div>
+          <div className="nav_tab" style={showAll ? {borderBottom: "4px solid #2F80ED"}: ""}>All</div>
+          <div className="nav_tab" style={showActive ? {borderBottom: "4px solid #2F80ED"} : null}>Active</div>
+          <div className="nav_tab" style={showCompleted ? {borderBottom: "4px solid #2F80ED"} : null}>Completed</div>
         </nav>
         <div className="add_task_group">
           <input type="text" placeholder='add details' name="" id="addTask" value={inputValue} onChange={handleInputChange} />
@@ -73,7 +81,7 @@ function App() {
             }
           )}
         </div>
-        <button className='btn_delete_all'>
+        <button className='btn_delete_all' onClick={deleteAll}>
           <span className="material-symbols-outlined">delete</span>
           delete all
         </button>

@@ -45,7 +45,7 @@
   
 }
 
-.nav_tab:hover, .nav_tab:active {
+.nav_tab:hover {
   border-bottom: 4px solid #2F80ED;
 }
 
