@@ -4,6 +4,7 @@ import './App.css'
 function App() {
   const [inputValue, setInputValue] = useState('')
   const [activeTasks, setActiveTasks] = useState([])
+  const [completedTasks, setCompletedTasks] = useState([])
 
   function handleInputChange(e) {
     setInputValue(e.target.value)
@@ -13,6 +14,25 @@ function App() {
     setActiveTasks(prev => [...prev, inputValue])
   }
 
+  function toggleTask(e) {
+    const task = e.target.parentNode.textContent;
+    if (e.target.checked) {
+      setCompletedTasks(prev => prev.filter(el => el !== task));
+      setActiveTasks(prev => [...prev, task])
+    } else {
+      setActiveTasks(prev => prev.filter(el => el !== task));
+      setCompletedTasks(prev => [task, ...prev ])
+    }
+  }
+
+  function deleteTask(e) {
+    const task = e.target.parentNode.previousSibling.textContent;
+    if (e.target.checked) {
+      setCompletedTasks(prev => prev.filter(el => el !== task));
+    } else {
+      setActiveTasks(prev => prev.filter(el => el !== task));
+    }
+  }
 
   return (
     <div className="App">
@@ -30,19 +50,31 @@ function App() {
         <div className="task_list">
           {activeTasks.map((task,i) => {
             return (<div className="task_item">
-            <label htmlFor={`task${i}`}>
-              <input type="checkbox"  name="" id={`task${i}`} />
+            <label htmlFor={`task${i}`} >
+              <input  type="checkbox" onMouseUp={toggleTask} checked={false}  name="" id={`task${i}`} />
               {task}
             </label>
-            <button className="btn_delete">
-                <span class="material-symbols-outlined">delete</span>
+            <button onClick={deleteTask} className="btn_delete">
+                <span className="material-symbols-outlined">delete</span>
+            </button>
+            </div>)
+            }
+          )}
+          {completedTasks.map((task,i) => {
+            return (<div className="task_item">
+            <label htmlFor={`completed_task${i}`} style={{textDecoration: "line-through"}}>
+              <input type="checkbox" checked={true} onMouseUp={toggleTask}  name="" id={`completed_task${i}`} />
+              {task}
+            </label>
+            <button onClick={deleteTask} className="btn_delete">
+                <span className="material-symbols-outlined">delete</span>
             </button>
             </div>)
             }
           )}
         </div>
         <button className='btn_delete_all'>
-          <span class="material-symbols-outlined">delete</span>
+          <span className="material-symbols-outlined">delete</span>
           delete all
         </button>
       </div>
